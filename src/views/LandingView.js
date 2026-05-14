@@ -279,11 +279,23 @@ const injectStyles = () => {
   style.textContent = `
 
     /* ── Layout base ─────────────────────────────────────────────────────── */
+    /*
+     * Sobrescribimos las variables de color a nivel de .lp-view para que el
+     * landing siempre sea legible sin importar el fondo elegido por el usuario.
+     * El resto del app sigue usando las variables normales del tema.
+     */
     .lp-view {
       display: flex;
       flex-direction: column;
       min-height: 100dvh;
       overflow-x: hidden;
+      --text-primary:    #ffffff;
+      --text-secondary:  rgba(255, 255, 255, 0.82);
+      --text-muted:      rgba(255, 255, 255, 0.55);
+      --glass-border:    rgba(255, 255, 255, 0.10);
+      --glass-border-strong: rgba(255, 255, 255, 0.20);
+      --glass-1: rgba(255, 255, 255, 0.05);
+      --glass-2: rgba(255, 255, 255, 0.09);
     }
 
     /* ── Nav ─────────────────────────────────────────────────────────────── */
@@ -342,13 +354,13 @@ const injectStyles = () => {
 
     .lp-btn--outline {
       background: transparent;
-      border-color: var(--glass-border-strong);
-      color: var(--text-secondary);
+      border-color: rgba(255, 255, 255, 0.35);
+      color: rgba(255, 255, 255, 0.80);
     }
     .lp-btn--outline:hover {
-      background: var(--glass-1);
-      border-color: var(--text-muted);
-      color: var(--text-primary);
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.6);
+      color: #ffffff;
     }
 
     .lp-btn--ghost {
