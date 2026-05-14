@@ -362,7 +362,7 @@ const injectStyles = () => {
     }
 
     .lp-btn--sm  { font-size: var(--text-xs); padding: var(--space-2) var(--space-4); }
-    .lp-btn--lg  { font-size: var(--text-base); padding: var(--space-4) var(--space-7); }
+    .lp-btn--lg  { font-size: var(--text-base); padding: var(--space-4) var(--space-8); }
 
     /* ── Main ────────────────────────────────────────────────────────────── */
     .lp-main {
