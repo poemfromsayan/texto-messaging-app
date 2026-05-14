@@ -44,10 +44,10 @@
      Preferir --blur-md para componentes frecuentes.
   ── */
   --blur-xs: blur(4px);   /* Elementos muy pequeños o de bajo impacto      */
-  --blur-sm: blur(8px);   /* Filas, items de lista                         */
-  --blur-md: blur(16px);  /* Burbujas, cards, inputs — uso general         */
-  --blur-lg: blur(24px);  /* Panels, sidebars, nav bars                    */
-  --blur-xl: blur(40px);  /* Modales, overlays, elementos sobre contenido  */
+  --blur-sm: blur(12px);  /* Filas, items de lista                         */
+  --blur-md: blur(20px);  /* Burbujas, cards, inputs — uso general         */
+  --blur-lg: blur(32px);  /* Panels, sidebars, nav bars                    */
+  --blur-xl: blur(52px);  /* Modales, overlays, elementos sobre contenido  */
 
 
   /* ── Tipografía ─────────────────────────────────────────────────────────
@@ -164,8 +164,8 @@
 [data-theme="dark"] {
 
   /* Fondo del documento (aplicar como gradient en <body>) */
-  --bg-from: #0A0A0A;
-  --bg-to:   #1C1C1C;
+  --bg-from: #09090f;
+  --bg-to:   #13131f;
 
   /* ── Superficies de vidrio ──────────────────────────────────────────────
      Jerarquía: glass-1 (más sutil) → glass-4 (más opaco / prominente)
@@ -176,12 +176,12 @@
        glass-3  →  Burbujas recibidas, panels activos, nav
        glass-4  →  Modales, menús flotantes, tooltips
   ── */
-  --glass-1:             rgba(255, 255, 255, 0.04);
-  --glass-2:             rgba(255, 255, 255, 0.08);
-  --glass-3:             rgba(255, 255, 255, 0.14);
-  --glass-4:             rgba(255, 255, 255, 0.24);
-  --glass-border:        rgba(255, 255, 255, 0.10);
-  --glass-border-strong: rgba(255, 255, 255, 0.22);
+  --glass-1:             rgba(255, 255, 255, 0.03);
+  --glass-2:             rgba(255, 255, 255, 0.07);
+  --glass-3:             rgba(255, 255, 255, 0.12);
+  --glass-4:             rgba(255, 255, 255, 0.20);
+  --glass-border:        rgba(255, 255, 255, 0.09);
+  --glass-border-strong: rgba(255, 255, 255, 0.18);
 
   /* ── Acento ─────────────────────────────────────────────────────────── */
   --accent-primary:       #EDEDED;   /* Near-white: máximo contraste       */
@@ -222,8 +222,8 @@
 [data-theme="light"] {
 
   /* Fondo del documento */
-  --bg-from: #BEBEBE;
-  --bg-to:   #D0D0D0;
+  --bg-from: #e8e8f0;
+  --bg-to:   #f0f0f8;
 
   /* ── Superficies de vidrio ──────────────────────────────────────────── */
   --glass-1:             rgba(255, 255, 255, 0.28);
