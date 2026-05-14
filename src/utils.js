@@ -850,3 +850,22 @@ export const applyBgImage = (url = getBgImage()) => {
     document.body.classList.remove('has-bg-image');
   }
 };
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   DEMO MODE
+   Indica si el usuario está explorando la app sin autenticarse.
+   Se persiste en localStorage para sobrevivir re-renders, pero se limpia
+   al salir (crear cuenta / cerrar sesión).
+══════════════════════════════════════════════════════════════════════════════ */
+
+/** @returns {boolean} */
+export const isDemoMode = () => localStorage.getItem('texto-demo') === '1';
+
+/** @param {boolean} active */
+export const setDemoMode = (active) => {
+  if (active) localStorage.setItem('texto-demo', '1');
+  else         localStorage.removeItem('texto-demo');
+};
+
+/** Alias semántico — elimina la flag de demo. */
+export const clearDemoMode = () => localStorage.removeItem('texto-demo');

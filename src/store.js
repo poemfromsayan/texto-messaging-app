@@ -594,3 +594,318 @@ export const forwardMessage = (targetChatId, message, anonymous = false) => {
 
   setState({ messages: updated, chats: updatedChats });
 };
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   DEMO DATA
+   Datos ricos precargados para el modo de demostración.
+   Muestran las principales funcionalidades sin necesidad de cuenta.
+══════════════════════════════════════════════════════════════════════════════ */
+
+const _demoNow   = () => new Date();
+const _demoMin   = (m) => new Date(Date.now() - m * 60000);
+const _demoHour  = (h) => _demoMin(h * 60);
+const _demoDay   = (d) => _demoHour(d * 24);
+
+const DEMO_CHATS = [
+  {
+    id: 'demo-1',
+    name: 'María García',
+    initials: 'MG',
+    status: 'online',
+    lastMessage: '¿Lo vemos hoy? 👀',
+    lastTime: _demoMin(4),
+    unread: 2,
+  },
+  {
+    id: 'demo-2',
+    name: 'Carlos Dev',
+    initials: 'CD',
+    status: 'away',
+    lastMessage: 'Gracias 😊 fue difícil refactorizar ese módulo',
+    lastTime: _demoMin(22),
+    unread: 1,
+  },
+  {
+    id: 'demo-3',
+    name: 'Ana Diseño',
+    initials: 'AD',
+    status: 'busy',
+    lastMessage: '👻 Exacto — puedo estar aquí sin que nadie lo sepa',
+    lastTime: _demoHour(2),
+    unread: 0,
+  },
+  {
+    id: 'demo-4',
+    name: 'Equipo Texto.',
+    initials: 'ET',
+    status: 'online',
+    lastMessage: '¡Nos vemos en el demo! 🎊',
+    lastTime: _demoMin(7),
+    unread: 5,
+  },
+  {
+    id: 'demo-arch',
+    name: 'Soporte',
+    initials: 'SO',
+    status: 'offline',
+    lastMessage: 'Tu solicitud fue procesada correctamente.',
+    lastTime: _demoDay(7),
+    unread: 0,
+  },
+];
+
+const DEMO_MESSAGES = {
+  'demo-1': [
+    {
+      id: 'dm1-1',
+      text: '¡Hola! ¿Cómo va el proyecto?',
+      sent: false,
+      time: _demoHour(2),
+      delivered: false,
+      reactions: {},
+      replyTo: null,
+      deleted: false,
+    },
+    {
+      id: 'dm1-2',
+      text: 'Muy bien 🚀 ya tenemos el cifrado E2E listo, ghost mode, mensajes efímeros…',
+      sent: true,
+      time: _demoHour(2),
+      delivered: true,
+      reactions: { '🔒': ['MG'] },
+      replyTo: null,
+      deleted: false,
+    },
+    {
+      id: 'dm1-3',
+      text: '¿En serio? ¿Cómo lo implementaste?',
+      sent: false,
+      time: _demoHour(1),
+      delivered: false,
+      reactions: {},
+      replyTo: null,
+      deleted: false,
+    },
+    {
+      id: 'dm1-4',
+      text: 'Es una simulación con la misma UX que Telegram — mismo flujo, mismo badge de candado 🔐',
+      sent: true,
+      time: _demoHour(1),
+      delivered: true,
+      reactions: {},
+      replyTo: null,
+      deleted: false,
+    },
+    {
+      id: 'dm1-5',
+      text: '¡Me encanta! El detalle del badge está increíble',
+      sent: false,
+      time: _demoMin(30),
+      delivered: false,
+      reactions: { '❤️': ['me'], '👍': ['me'] },
+      replyTo: null,
+      deleted: false,
+    },
+    {
+      id: 'dm1-6',
+      text: '¿Lo vemos hoy? 👀',
+      sent: false,
+      time: _demoMin(4),
+      delivered: false,
+      reactions: {},
+      replyTo: null,
+      deleted: false,
+    },
+  ],
+  'demo-2': [
+    {
+      id: 'dm2-1',
+      text: 'Oye, ¿puedes revisar el PR de esta tarde?',
+      sent: false,
+      time: _demoDay(1),
+      delivered: false,
+      reactions: {},
+      replyTo: null,
+      deleted: false,
+    },
+    {
+      id: 'dm2-2',
+      text: 'Claro, lo veo en cuanto salga de la reunión',
+      sent: true,
+      time: _demoDay(1),
+      delivered: true,
+      reactions: {},
+      replyTo: null,
+      deleted: false,
+    },
+    {
+      id: 'dm2-3',
+      text: '¡El código quedó muy limpio! Refactorizar ese módulo valió la pena',
+      sent: false,
+      time: _demoMin(45),
+      delivered: false,
+      reactions: {},
+      replyTo: { msgId: 'dm2-2', text: 'Claro, lo veo en cuanto salga de la reunión', sent: true },
+      deleted: false,
+    },
+    {
+      id: 'dm2-4',
+      text: 'Gracias 😊 fue difícil refactorizar ese módulo',
+      sent: true,
+      time: _demoMin(22),
+      delivered: true,
+      reactions: {},
+      replyTo: null,
+      deleted: false,
+    },
+  ],
+  'demo-3': [
+    {
+      id: 'dm3-1',
+      text: 'Vi tu diseño en Figma — ¡el sistema de tokens está muy bien pensado!',
+      sent: false,
+      time: _demoDay(2),
+      delivered: false,
+      reactions: {},
+      replyTo: null,
+      deleted: false,
+    },
+    {
+      id: 'dm3-2',
+      text: 'Gracias, fue bastante trabajo alinear todo con CSS custom properties',
+      sent: true,
+      time: _demoDay(2),
+      delivered: true,
+      reactions: {},
+      replyTo: null,
+      deleted: false,
+    },
+    {
+      id: 'dm3-3',
+      text: '',
+      sent: false,
+      time: _demoDay(1),
+      delivered: false,
+      reactions: {},
+      replyTo: null,
+      deleted: true,
+    },
+    {
+      id: 'dm3-4',
+      text: 'Por cierto, ¿activaste el modo fantasma? No te vi conectado en todo el día',
+      sent: false,
+      time: _demoHour(3),
+      delivered: false,
+      reactions: {},
+      replyTo: null,
+      deleted: false,
+    },
+    {
+      id: 'dm3-5',
+      text: '👻 Exacto — puedo estar aquí sin que nadie lo sepa',
+      sent: true,
+      time: _demoHour(2),
+      delivered: true,
+      reactions: { '👻': ['AD'] },
+      replyTo: null,
+      deleted: false,
+    },
+  ],
+  'demo-4': [
+    {
+      id: 'dm4-1',
+      text: 'Deploy listo en GitHub Pages 🚀',
+      sent: true,
+      time: _demoHour(1),
+      delivered: true,
+      reactions: {},
+      replyTo: null,
+      deleted: false,
+      senderInitials: 'TU',
+    },
+    {
+      id: 'dm4-2',
+      text: '¡Excelente! Ya lo probé y todo funciona perfecto',
+      sent: false,
+      time: _demoMin(50),
+      delivered: false,
+      reactions: {},
+      replyTo: null,
+      deleted: false,
+      senderInitials: 'MG',
+    },
+    {
+      id: 'dm4-3',
+      text: '¿Cuándo agregamos los grupos reales? 🤔',
+      sent: false,
+      time: _demoMin(40),
+      delivered: false,
+      reactions: {},
+      replyTo: null,
+      deleted: false,
+      senderInitials: 'CD',
+    },
+    {
+      id: 'dm4-4',
+      text: 'Pronto 😄 primero el landing page — queda increíble',
+      sent: true,
+      time: _demoMin(15),
+      delivered: true,
+      reactions: { '🎉': ['MG', 'CD'], '🔥': ['AD'] },
+      replyTo: null,
+      deleted: false,
+    },
+    {
+      id: 'dm4-5',
+      text: '¡Nos vemos en el demo! 🎊',
+      sent: false,
+      time: _demoMin(7),
+      delivered: false,
+      reactions: {},
+      replyTo: null,
+      deleted: false,
+      senderInitials: 'AD',
+    },
+  ],
+  'demo-arch': [
+    {
+      id: 'dma-1',
+      text: 'Tu solicitud fue procesada correctamente.',
+      sent: false,
+      time: _demoDay(7),
+      delivered: false,
+      reactions: {},
+      replyTo: null,
+      deleted: false,
+    },
+  ],
+};
+
+const DEMO_CONTACTS = [
+  { id: 'dc1', name: 'María García', initials: 'MG', status: 'online'  },
+  { id: 'dc2', name: 'Carlos Dev',   initials: 'CD', status: 'away'    },
+  { id: 'dc3', name: 'Ana Diseño',   initials: 'AD', status: 'busy'    },
+];
+
+/**
+ * Carga datos de demostración en el store global.
+ * Llamar antes de navegar a '/chats' en modo demo.
+ */
+export const loadDemoData = () => {
+  setState({
+    user: {
+      id: 'me',
+      name: 'Visitante',
+      initials: 'VI',
+      status: 'online',
+    },
+    chats:          DEMO_CHATS,
+    messages:       DEMO_MESSAGES,
+    contacts:       DEMO_CONTACTS,
+    activeChatId:   'demo-1',
+    pinnedMessages: { 'demo-1': 'dm1-4' },
+    disappearTimers: {},
+    archivedChats:  ['demo-arch'],
+    blockedUsers:   [],
+  });
+};

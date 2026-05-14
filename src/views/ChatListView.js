@@ -13,7 +13,8 @@ import { Button }           from '../components/Button.js';
 import { ConversationView } from './ConversationView.js';
 import { getState, subscribe, getContacts, createChat, archiveChat, unarchiveChat } from '../store.js';
 import { navigate }         from '../navigation.js';
-import { toggleTheme, clearAuthentication, isGhostMode } from '../utils.js';
+import { toggleTheme, clearAuthentication, isGhostMode, isDemoMode } from '../utils.js';
+import { DemoBanner } from '../components/DemoBanner.js';
 
 /**
  * @param {Object} [props]
@@ -30,6 +31,9 @@ export const ChatListView = ({ activeChatId = null } = {}) => {
   // ── Shell principal ────────────────────────────────────────────────────────
   // chat-open activa el layout mobile (oculta sidebar, muestra conversación)
   const view = div({ className: currentChatId ? 'app-shell chat-open' : 'app-shell' });
+
+  // ── Banner de modo demo (visible solo si el usuario no está autenticado) ──
+  if (isDemoMode()) view.prepend(DemoBanner());
 
   // ── Sidebar ────────────────────────────────────────────────────────────────
   const sidebar = nav({

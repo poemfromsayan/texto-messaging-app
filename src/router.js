@@ -17,9 +17,10 @@
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
-import { setTheme, getTheme, isAuthenticated, setAccentColor, getAccentColor, initOfflineDetector, initSessionLock, applyBgImage } from './utils.js';
+import { setTheme, getTheme, isAuthenticated, setAccentColor, getAccentColor, initOfflineDetector, initSessionLock, applyBgImage, isDemoMode } from './utils.js';
 import { openChat }      from './store.js';
 import { navigate }      from './navigation.js';
+import { LandingView }   from './views/LandingView.js';
 import { LoginView }     from './views/LoginView.js';
 import { ProfileView }   from './views/ProfileView.js';
 import { ChatListView }  from './views/ChatListView.js';
@@ -36,7 +37,8 @@ const app = document.getElementById('app');
 ══════════════════════════════════════════════════════════════════════════════ */
 
 const routes = {
-  '/':        () => ChatListView(),
+  '/':        () => LandingView(),
+  '/landing': () => LandingView(),
   '/chats':   () => ChatListView(),
   '/login':   () => LoginView(),
   '/profile': () => ProfileView(),
@@ -93,13 +95,17 @@ const render = () => {
   const auth = isAuthenticated();
 
   // ── Auth guard ────────────────────────────────────────────────────────────
-  // Usuario no autenticado intentando acceder a una ruta protegida → login
-  if (path !== '/login' && !auth) {
-    navigate('/login');
+  const demo = isDemoMode();
+  const publicPaths = ['/', '/landing', '/login'];
+  const isPublic = publicPaths.includes(path);
+
+  // Rutas protegidas sin sesión ni demo → landing
+  if (!isPublic && !auth && !demo) {
+    navigate('/');
     return;
   }
-  // Usuario autenticado intentando ir a login → chats
-  if (path === '/login' && auth) {
+  // Login intentado cuando ya hay sesión o demo activo → chats
+  if (path === '/login' && (auth || demo)) {
     navigate('/chats');
     return;
   }
