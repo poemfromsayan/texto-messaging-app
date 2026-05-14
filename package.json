@@ -1,0 +1,20 @@
+{
+  "name": "texto.",
+  "version": "1.0.0",
+  "description": "Texto. — Mensajería privada y segura",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "keywords": [
+    "messaging",
+    "chat",
+    "glassmorphism"
+  ],
+  "author": "Saúl",
+  "license": "ISC",
+  "devDependencies": {
+    "vite": "^5.4.21"
+  }
+}

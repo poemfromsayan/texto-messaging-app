@@ -1,0 +1,321 @@
+/**
+ * tokens.css — Texto. Design Tokens
+ * ─────────────────────────────────────────────────────────────────────────────
+ * Single source of truth para todos los CSS Custom Properties del proyecto.
+ *
+ * CÓMO USAR:
+ *   Importar este archivo una sola vez en el punto de entrada de la app:
+ *
+ *     <link rel="stylesheet" href="tokens.css" />
+ *
+ *   O vía CSS:
+ *
+ *     @import url('./tokens.css');
+ *
+ * SISTEMA DE TEMAS:
+ *   El tema se controla con el atributo `data-theme` en <html>:
+ *
+ *     document.documentElement.setAttribute('data-theme', 'dark');
+ *     document.documentElement.setAttribute('data-theme', 'light');
+ *
+ *   Si no se define `data-theme`, el tema se detecta automáticamente
+ *   desde la preferencia del sistema operativo (prefers-color-scheme).
+ *
+ * PRINCIPIO DE DISEÑO:
+ *   Texto. usa una base monocromática: blancos, negros y grises.
+ *   Los únicos colores permitidos son semánticos — no decorativos:
+ *     · Verde  →  disponible / éxito / confirmación
+ *     · Ámbar  →  ausente / advertencia / pendiente
+ *     · Rojo   →  no molestar / destructivo / error
+ * ─────────────────────────────────────────────────────────────────────────────
+ */
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   TOKENS UNIVERSALES
+   Valores que no cambian entre temas.
+═══════════════════════════════════════════════════════════════════════════ */
+
+:root {
+
+  /* ── Backdrop blur ──────────────────────────────────────────────────────
+     Usar con backdrop-filter y -webkit-backdrop-filter.
+     Niveles más altos = mayor efecto frosted glass = más costo de GPU.
+     Preferir --blur-md para componentes frecuentes.
+  ── */
+  --blur-xs: blur(4px);   /* Elementos muy pequeños o de bajo impacto      */
+  --blur-sm: blur(8px);   /* Filas, items de lista                         */
+  --blur-md: blur(16px);  /* Burbujas, cards, inputs — uso general         */
+  --blur-lg: blur(24px);  /* Panels, sidebars, nav bars                    */
+  --blur-xl: blur(40px);  /* Modales, overlays, elementos sobre contenido  */
+
+
+  /* ── Tipografía ─────────────────────────────────────────────────────────
+     Font families
+  ── */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --font-mono: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+
+  /* Escala de tamaños — base 15px, proporción 1.2 aprox. */
+  --text-xs:   11px;   /* Etiquetas, timestamps, tokens                    */
+  --text-sm:   13px;   /* Previews de mensaje, metadata                    */
+  --text-base: 15px;   /* Texto de mensaje — tamaño raíz                   */
+  --text-md:   17px;   /* Subtítulos, elementos de acción                  */
+  --text-lg:   20px;   /* Nombre del chat activo                           */
+  --text-xl:   24px;   /* Títulos de sección                               */
+  --text-2xl:  32px;   /* Títulos de pantalla                              */
+  --text-3xl:  40px;   /* Marca / Hero                                     */
+
+  /* Pesos */
+  --weight-light:    300;
+  --weight-regular:  400;
+  --weight-medium:   500;
+  --weight-semibold: 600;
+  --weight-bold:     700;
+
+  /* Interlineado */
+  --leading-tight:   1.2;   /* Títulos grandes                             */
+  --leading-normal:  1.5;   /* Texto de interfaz                           */
+  --leading-relaxed: 1.7;   /* Texto de mensaje — máxima legibilidad       */
+
+
+  /* ── Espaciado ──────────────────────────────────────────────────────────
+     Escala en múltiplos de 4px.
+     REGLA: solo usar estos tokens para margin, padding y gap.
+     Nunca valores arbitrarios en el resto del codebase.
+  ── */
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  20px;
+  --space-6:  24px;
+  --space-8:  32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+
+
+  /* ── Border radius ──────────────────────────────────────────────────────
+     Los componentes de Texto. prefieren radios generosos.
+     El glassmorphism se beneficia de curvas pronunciadas.
+  ── */
+  --radius-xs:   4px;     /* Etiquetas de código, badges compactos         */
+  --radius-sm:   8px;     /* Elementos pequeños, checkboxes                */
+  --radius-md:   12px;    /* Inputs, menús                                 */
+  --radius-lg:   16px;    /* Cards, filas de chat                          */
+  --radius-xl:   20px;    /* Burbujas de mensaje, botones grandes          */
+  --radius-2xl:  28px;    /* Modales, panels principales                   */
+  --radius-full: 9999px;  /* Botones pill, avatares, badges de contador    */
+
+
+  /* ── Transiciones ───────────────────────────────────────────────────────
+     Preferir --transition-base para la mayoría de interacciones.
+     --transition-slow para cambios de layout o animaciones de entrada.
+  ── */
+  --transition-fast: 120ms ease;
+  --transition-base: 200ms ease;
+  --transition-slow: 350ms cubic-bezier(0.4, 0, 0.2, 1);
+
+
+  /* ── Z-index ────────────────────────────────────────────────────────────
+     Escala de capas. Nunca usar valores arbitrarios de z-index.
+  ── */
+  --z-base:     0;
+  --z-raised:   10;    /* Elementos que flotan sobre el contenido base     */
+  --z-dropdown: 100;   /* Menús desplegables, sugerencias                  */
+  --z-modal:    200;   /* Diálogos, sheets                                 */
+  --z-toast:    300;   /* Notificaciones temporales                        */
+  --z-tooltip:  400;   /* Tooltips — siempre encima de todo                */
+
+
+  /* ── Colores semánticos ─────────────────────────────────────────────────
+     Únicos colores no-neutros del sistema.
+     Su uso está restringido a comunicar estado — jamás decoración.
+
+     Estados de contacto:
+       online   → disponible para chatear
+       warning  → ausente / ocupado / pendiente
+       danger   → no molestar / error / acción destructiva
+
+     NUNCA usar estos colores como accent visual o para destacar UI.
+  ── */
+  --status-online:  #5DBB63;
+  --status-warning: #F0A030;
+  --status-danger:  #E5534B;
+
+  /* Tintes semánticos para superficies glass (fondo + borde en badges/buttons) */
+  --tint-warning-bg:     rgba(240, 160, 48,  0.14);
+  --tint-warning-border: rgba(240, 160, 48,  0.30);
+  --tint-danger-bg:      rgba(229, 83,  75,  0.14);
+  --tint-danger-border:  rgba(229, 83,  75,  0.30);
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   DARK MODE
+   Fondo: negro profundo (#0A0A0A) → gris muy oscuro (#1C1C1C)
+   Vidrio: blanco con distintas opacidades sobre el fondo oscuro
+   Bordes: blanco-transparente (visibles sobre oscuro)
+   Acento: near-white (#EDEDED) — máximo contraste sobre oscuro
+═══════════════════════════════════════════════════════════════════════════ */
+
+[data-theme="dark"] {
+
+  /* Fondo del documento (aplicar como gradient en <body>) */
+  --bg-from: #0A0A0A;
+  --bg-to:   #1C1C1C;
+
+  /* ── Superficies de vidrio ──────────────────────────────────────────────
+     Jerarquía: glass-1 (más sutil) → glass-4 (más opaco / prominente)
+     Usar siempre con backdrop-filter: var(--blur-*).
+
+       glass-1  →  Fondos de sección, áreas de bajo impacto
+       glass-2  →  Inputs, filas de lista, elementos secundarios
+       glass-3  →  Burbujas recibidas, panels activos, nav
+       glass-4  →  Modales, menús flotantes, tooltips
+  ── */
+  --glass-1:             rgba(255, 255, 255, 0.04);
+  --glass-2:             rgba(255, 255, 255, 0.08);
+  --glass-3:             rgba(255, 255, 255, 0.14);
+  --glass-4:             rgba(255, 255, 255, 0.24);
+  --glass-border:        rgba(255, 255, 255, 0.10);
+  --glass-border-strong: rgba(255, 255, 255, 0.22);
+
+  /* ── Acento ─────────────────────────────────────────────────────────── */
+  --accent-primary:       #EDEDED;   /* Near-white: máximo contraste       */
+  --accent-primary-hover: #FFFFFF;
+  --accent-on-primary:    #0A0A0A;   /* Texto sobre botón primario         */
+
+  /* ── Burbujas de mensaje ────────────────────────────────────────────── */
+  --bubble-sent-bg:     rgba(255, 255, 255, 0.18);  /* Más opaca = enviada */
+  --bubble-sent-border: rgba(255, 255, 255, 0.30);
+
+  /* ── Texto ──────────────────────────────────────────────────────────── */
+  --text-primary:   #F2F2F2;
+  --text-secondary: #9A9A9A;
+  --text-muted:     #505050;
+  --text-inverse:   #0A0A0A;   /* Texto sobre superficies claras           */
+  --text-accent:    #E0E0E0;   /* Variante de acento para texto            */
+
+  /* ── Sombras ────────────────────────────────────────────────────────── */
+  --shadow-sm:   0 2px 8px  rgba(0, 0, 0, 0.45);
+  --shadow-md:   0 4px 16px rgba(0, 0, 0, 0.58);
+  --shadow-lg:   0 8px 32px rgba(0, 0, 0, 0.70);
+  --shadow-glow: 0 0 24px   rgba(255, 255, 255, 0.07);  /* Halo sutil      */
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   LIGHT MODE
+   Fondo: gris plata (#BEBEBE) → gris claro (#D0D0D0)
+   Vidrio: blanco con distintas opacidades sobre el fondo gris
+   Bordes: negro-transparente (visibles sobre claro — inverso al dark)
+   Acento: near-black (#1A1A1A) — máximo contraste sobre claro
+
+   NOTA: el fondo intencionalmente NO es blanco. Un fondo gris medio
+   es lo que hace visible el efecto frosted glass de los paneles blancos.
+   Si el fondo fuera blanco, el vidrio y la base serían indistinguibles.
+═══════════════════════════════════════════════════════════════════════════ */
+
+[data-theme="light"] {
+
+  /* Fondo del documento */
+  --bg-from: #BEBEBE;
+  --bg-to:   #D0D0D0;
+
+  /* ── Superficies de vidrio ──────────────────────────────────────────── */
+  --glass-1:             rgba(255, 255, 255, 0.28);
+  --glass-2:             rgba(255, 255, 255, 0.50);
+  --glass-3:             rgba(255, 255, 255, 0.70);
+  --glass-4:             rgba(255, 255, 255, 0.88);
+
+  /* Bordes: negro-transparente (inverso al dark mode) */
+  --glass-border:        rgba(0, 0, 0, 0.08);
+  --glass-border-strong: rgba(0, 0, 0, 0.16);
+
+  /* ── Acento ─────────────────────────────────────────────────────────── */
+  --accent-primary:       #1A1A1A;   /* Near-black: máximo contraste       */
+  --accent-primary-hover: #000000;
+  --accent-on-primary:    #FFFFFF;
+
+  /* ── Burbujas de mensaje ────────────────────────────────────────────── */
+  --bubble-sent-bg:     rgba(0, 0, 0, 0.09);   /* Más oscura = enviada     */
+  --bubble-sent-border: rgba(0, 0, 0, 0.18);
+
+  /* ── Texto ──────────────────────────────────────────────────────────── */
+  --text-primary:   #111111;
+  --text-secondary: #444444;
+  --text-muted:     #888888;
+  --text-inverse:   #FFFFFF;
+  --text-accent:    #1A1A1A;
+
+  /* ── Sombras — más pronunciadas para compensar el fondo claro ────────── */
+  --shadow-sm:   0 2px 8px  rgba(0, 0, 0, 0.12);
+  --shadow-md:   0 4px 16px rgba(0, 0, 0, 0.18);
+  --shadow-lg:   0 8px 32px rgba(0, 0, 0, 0.26);
+  --shadow-glow: 0 0 24px   rgba(0, 0, 0, 0.12);
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   FALLBACK: PREFERENCIA DEL SISTEMA OPERATIVO
+   Se activa cuando no se ha establecido data-theme en el <html>.
+   Respeta automáticamente la configuración del SO del usuario.
+   En cuanto JS establezca data-theme, estas reglas quedan anuladas.
+═══════════════════════════════════════════════════════════════════════════ */
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    --bg-from:             #0A0A0A;
+    --bg-to:               #1C1C1C;
+    --glass-1:             rgba(255, 255, 255, 0.04);
+    --glass-2:             rgba(255, 255, 255, 0.08);
+    --glass-3:             rgba(255, 255, 255, 0.14);
+    --glass-4:             rgba(255, 255, 255, 0.24);
+    --glass-border:        rgba(255, 255, 255, 0.10);
+    --glass-border-strong: rgba(255, 255, 255, 0.22);
+    --accent-primary:       #EDEDED;
+    --accent-primary-hover: #FFFFFF;
+    --accent-on-primary:    #0A0A0A;
+    --bubble-sent-bg:       rgba(255, 255, 255, 0.18);
+    --bubble-sent-border:   rgba(255, 255, 255, 0.30);
+    --text-primary:   #F2F2F2;
+    --text-secondary: #9A9A9A;
+    --text-muted:     #505050;
+    --text-inverse:   #0A0A0A;
+    --text-accent:    #E0E0E0;
+    --shadow-sm:   0 2px 8px  rgba(0, 0, 0, 0.45);
+    --shadow-md:   0 4px 16px rgba(0, 0, 0, 0.58);
+    --shadow-lg:   0 8px 32px rgba(0, 0, 0, 0.70);
+    --shadow-glow: 0 0 24px   rgba(255, 255, 255, 0.07);
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) {
+    --bg-from:             #BEBEBE;
+    --bg-to:               #D0D0D0;
+    --glass-1:             rgba(255, 255, 255, 0.28);
+    --glass-2:             rgba(255, 255, 255, 0.50);
+    --glass-3:             rgba(255, 255, 255, 0.70);
+    --glass-4:             rgba(255, 255, 255, 0.88);
+    --glass-border:        rgba(0, 0, 0, 0.08);
+    --glass-border-strong: rgba(0, 0, 0, 0.16);
+    --accent-primary:       #1A1A1A;
+    --accent-primary-hover: #000000;
+    --accent-on-primary:    #FFFFFF;
+    --bubble-sent-bg:       rgba(0, 0, 0, 0.09);
+    --bubble-sent-border:   rgba(0, 0, 0, 0.18);
+    --text-primary:   #111111;
+    --text-secondary: #444444;
+    --text-muted:     #888888;
+    --text-inverse:   #FFFFFF;
+    --text-accent:    #1A1A1A;
+    --shadow-sm:   0 2px 8px  rgba(0, 0, 0, 0.12);
+    --shadow-md:   0 4px 16px rgba(0, 0, 0, 0.18);
+    --shadow-lg:   0 8px 32px rgba(0, 0, 0, 0.26);
+    --shadow-glow: 0 0 24px   rgba(0, 0, 0, 0.12);
+  }
+}

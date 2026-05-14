@@ -1,0 +1,210 @@
+/**
+ * utilities.css — Texto. Utility Classes
+ * ─────────────────────────────────────────────────────────────────────────────
+ * Clases de uso general aplicables a cualquier elemento.
+ * Convención: una clase = una responsabilidad.
+ * NO usar para componentes específicos — eso va en su propio archivo.
+ * ─────────────────────────────────────────────────────────────────────────────
+ */
+
+/* ── Glass surfaces ──────────────────────────────────────────────────────────── */
+
+.glass {
+  background: var(--glass-2);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: var(--blur-md);
+  -webkit-backdrop-filter: var(--blur-md);
+}
+
+.glass-subtle {
+  background: var(--glass-1);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: var(--blur-sm);
+  -webkit-backdrop-filter: var(--blur-sm);
+}
+
+.glass-strong {
+  background: var(--glass-3);
+  border: 1px solid var(--glass-border-strong);
+  backdrop-filter: var(--blur-lg);
+  -webkit-backdrop-filter: var(--blur-lg);
+}
+
+.glass-modal {
+  background: var(--glass-4);
+  border: 1px solid var(--glass-border-strong);
+  backdrop-filter: var(--blur-xl);
+  -webkit-backdrop-filter: var(--blur-xl);
+}
+
+/* ── Layout ──────────────────────────────────────────────────────────────────── */
+
+.flex         { display: flex; }
+.flex-col     { display: flex; flex-direction: column; }
+.flex-1       { flex: 1; }
+.flex-shrink-0 { flex-shrink: 0; }
+
+.items-start  { align-items: flex-start; }
+.items-center { align-items: center; }
+.items-end    { align-items: flex-end; }
+
+.justify-start   { justify-content: flex-start; }
+.justify-center  { justify-content: center; }
+.justify-end     { justify-content: flex-end; }
+.justify-between { justify-content: space-between; }
+
+.gap-1  { gap: var(--space-1); }
+.gap-2  { gap: var(--space-2); }
+.gap-3  { gap: var(--space-3); }
+.gap-4  { gap: var(--space-4); }
+.gap-6  { gap: var(--space-6); }
+.gap-8  { gap: var(--space-8); }
+
+.wrap   { flex-wrap: wrap; }
+
+/* ── Spacing ─────────────────────────────────────────────────────────────────── */
+
+.p-2  { padding: var(--space-2); }
+.p-3  { padding: var(--space-3); }
+.p-4  { padding: var(--space-4); }
+.p-6  { padding: var(--space-6); }
+
+.px-3 { padding-inline: var(--space-3); }
+.px-4 { padding-inline: var(--space-4); }
+.px-6 { padding-inline: var(--space-6); }
+
+.py-2 { padding-block: var(--space-2); }
+.py-3 { padding-block: var(--space-3); }
+.py-4 { padding-block: var(--space-4); }
+
+/* ── Dimensiones ─────────────────────────────────────────────────────────────── */
+
+.w-full   { width: 100%; }
+.h-full   { height: 100%; }
+.min-h-screen { min-height: 100dvh; }
+.overflow-hidden { overflow: hidden; }
+.overflow-y-auto { overflow-y: auto; }
+
+/* ── Tipografía ──────────────────────────────────────────────────────────────── */
+
+.text-xs   { font-size: var(--text-xs); }
+.text-sm   { font-size: var(--text-sm); }
+.text-base { font-size: var(--text-base); }
+.text-md   { font-size: var(--text-md); }
+.text-lg   { font-size: var(--text-lg); }
+.text-xl   { font-size: var(--text-xl); }
+
+.font-light    { font-weight: var(--weight-light); }
+.font-regular  { font-weight: var(--weight-regular); }
+.font-medium   { font-weight: var(--weight-medium); }
+.font-semibold { font-weight: var(--weight-semibold); }
+.font-bold     { font-weight: var(--weight-bold); }
+
+.text-primary   { color: var(--text-primary); }
+.text-secondary { color: var(--text-secondary); }
+.text-muted     { color: var(--text-muted); }
+.text-accent    { color: var(--text-accent); }
+
+.text-center { text-align: center; }
+.text-right  { text-align: right; }
+
+.uppercase   { text-transform: uppercase; }
+.tracking-wide { letter-spacing: 0.08em; }
+.tracking-tight { letter-spacing: -0.02em; }
+
+.truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ── Border radius ───────────────────────────────────────────────────────────── */
+
+.rounded-sm   { border-radius: var(--radius-sm); }
+.rounded-md   { border-radius: var(--radius-md); }
+.rounded-lg   { border-radius: var(--radius-lg); }
+.rounded-xl   { border-radius: var(--radius-xl); }
+.rounded-2xl  { border-radius: var(--radius-2xl); }
+.rounded-full { border-radius: var(--radius-full); }
+
+/* ── Sombras ─────────────────────────────────────────────────────────────────── */
+
+.shadow-sm   { box-shadow: var(--shadow-sm); }
+.shadow-md   { box-shadow: var(--shadow-md); }
+.shadow-lg   { box-shadow: var(--shadow-lg); }
+.shadow-glow { box-shadow: var(--shadow-glow); }
+
+/* ── Transiciones ────────────────────────────────────────────────────────────── */
+
+.transition       { transition: all var(--transition-base); }
+.transition-fast  { transition: all var(--transition-fast); }
+.transition-slow  { transition: all var(--transition-slow); }
+
+/* ── Accesibilidad ───────────────────────────────────────────────────────────── */
+
+/* Screen-reader only: visible para lectores, invisible visualmente */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* ── Estados interactivos ────────────────────────────────────────────────────── */
+
+.cursor-pointer { cursor: pointer; }
+.select-none    { user-select: none; }
+.pointer-events-none { pointer-events: none; }
+
+/* ── Separadores ─────────────────────────────────────────────────────────────── */
+
+.divider {
+  height: 1px;
+  background: var(--glass-border);
+}
+
+.divider-vertical {
+  width: 1px;
+  background: var(--glass-border);
+  align-self: stretch;
+}
+
+/* ── Avatar ──────────────────────────────────────────────────────────────────── */
+/*
+ * Componente de avatar de iniciales.
+ * El status ring se muestra como box-shadow de color semántico.
+ */
+
+.avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-full);
+  font-family: var(--font-sans);
+  font-weight: var(--weight-semibold);
+  letter-spacing: 0;
+  background: var(--glass-3);
+  border: 1px solid var(--glass-border-strong);
+  color: var(--text-primary);
+  flex-shrink: 0;
+  user-select: none;
+  transition: box-shadow var(--transition-fast);
+}
+
+/* Tamaños */
+.avatar-xs { width: 22px;  height: 22px;  font-size: 9px;  }
+.avatar-sm { width: 32px;  height: 32px;  font-size: 12px; }
+.avatar-md { width: 40px;  height: 40px;  font-size: 14px; }
+.avatar-lg { width: 56px;  height: 56px;  font-size: 20px; }
+.avatar-xl { width: 80px;  height: 80px;  font-size: 28px; }
+
+/* Status rings — colored outline indicating presence */
+.avatar-online  { box-shadow: 0 0 0 2px var(--status-online);  }
+.avatar-away    { box-shadow: 0 0 0 2px var(--status-warning); }
+.avatar-busy    { box-shadow: 0 0 0 2px var(--status-danger);  }
+.avatar-offline { box-shadow: 0 0 0 2px var(--text-muted); opacity: 0.65; }

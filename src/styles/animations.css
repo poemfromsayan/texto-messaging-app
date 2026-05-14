@@ -1,0 +1,134 @@
+/**
+ * animations.css — Texto. Keyframes & Transitions
+ * ─────────────────────────────────────────────────────────────────────────────
+ * Todas las animaciones del proyecto definidas como @keyframes.
+ * Usar con clases de utilidad o directamente en componentes via animation.
+ *
+ * Convención de uso:
+ *   animation: fadeIn var(--transition-base) ease forwards;
+ *
+ * IMPORTANTE: Todas las animaciones respetan prefers-reduced-motion
+ * (ver base.css — el override global cubre todos los casos).
+ * ─────────────────────────────────────────────────────────────────────────────
+ */
+
+/* ── Opacidad ────────────────────────────────────────────────────────────────── */
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+
+/* ── Entrada desde costados ──────────────────────────────────────────────────── */
+
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-16px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(16px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* ── Entrada vertical ────────────────────────────────────────────────────────── */
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Escala ──────────────────────────────────────────────────────────────────── */
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes popIn {
+  0%   { opacity: 0; transform: scale(0.8); }
+  70%  { transform: scale(1.04); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+/* ── Estado de carga ─────────────────────────────────────────────────────────── */
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.4; }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position:  200% center; }
+}
+
+/* ── Burbuja de mensaje entrante ─────────────────────────────────────────────── */
+
+@keyframes bubbleIn {
+  from { opacity: 0; transform: translateY(6px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* ── Notificación / Toast ────────────────────────────────────────────────────── */
+
+@keyframes toastIn {
+  from { opacity: 0; transform: translateY(100%) scale(0.95); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes toastOut {
+  from { opacity: 1; transform: translateY(0) scale(1); }
+  to   { opacity: 0; transform: translateY(100%) scale(0.95); }
+}
+
+/* ── Modal / Dialog ──────────────────────────────────────────────────────────── */
+
+@keyframes modalIn {
+  from { opacity: 0; transform: scale(0.96) translateY(8px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+@keyframes overlayIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ── Clases de animación listas para usar ────────────────────────────────────── */
+
+.anim-fade-in    { animation: fadeIn    var(--transition-base) ease both; }
+.anim-slide-up   { animation: slideUp   var(--transition-base) ease both; }
+.anim-scale-in   { animation: scaleIn   var(--transition-base) ease both; }
+.anim-pop-in     { animation: popIn     var(--transition-slow) ease both; }
+.anim-bubble-in  { animation: bubbleIn  var(--transition-fast) ease both; }
+.anim-pulse      { animation: pulse     1.5s ease infinite; }
+
+/* Shimmer skeleton loader */
+.anim-shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--glass-2) 25%,
+    var(--glass-3) 50%,
+    var(--glass-2) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.6s linear infinite;
+}
+
+/* ── Delays de entrada escalonada ────────────────────────────────────────────── */
+
+.delay-1 { animation-delay: 50ms; }
+.delay-2 { animation-delay: 100ms; }
+.delay-3 { animation-delay: 150ms; }
+.delay-4 { animation-delay: 200ms; }
+.delay-5 { animation-delay: 250ms; }

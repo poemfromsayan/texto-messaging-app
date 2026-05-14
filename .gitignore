@@ -1,0 +1,34 @@
+# Dependencias
+node_modules/
+.npm/
+
+# Build output
+dist/
+build/
+
+# Sistema operativo
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+
+# Editores
+.vscode/settings.json
+.idea/
+*.swp
+*.swo
+
+# Variables de entorno
+.env
+.env.local
+.env.*.local
+
+# Logs
+*.log
+npm-debug.log*
+
+# Caché
+.cache/
+.parcel-cache/
