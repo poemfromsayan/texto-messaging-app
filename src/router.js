@@ -17,7 +17,7 @@
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
-import { setTheme, getTheme, isAuthenticated, setAccentColor, getAccentColor, initOfflineDetector, initSessionLock } from './utils.js';
+import { setTheme, getTheme, isAuthenticated, setAccentColor, getAccentColor, initOfflineDetector, initSessionLock, applyBgImage } from './utils.js';
 import { openChat }      from './store.js';
 import { navigate }      from './navigation.js';
 import { LoginView }     from './views/LoginView.js';
@@ -132,10 +132,13 @@ const init = () => {
   // 2. Aplica el color de acento guardado
   setAccentColor(getAccentColor());
 
-  // 3. Inicializa el detector de conexión
+  // 3. Aplica el fondo personalizado si existe
+  applyBgImage();
+
+  // 4. Inicializa el detector de conexión
   initOfflineDetector();
 
-  // 4. Inicializa el bloqueo de sesión con PIN
+  // 5. Inicializa el bloqueo de sesión con PIN
   initSessionLock();
 
   // 5. Escucha cambios de ruta

@@ -132,6 +132,44 @@ body::after {
   );
 }
 
+/* ── Fondo personalizado (imagen) ───────────────────────────────────────────── */
+
+body.has-bg-image {
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.42), rgba(0, 0, 0, 0.42)),
+    var(--custom-bg-url);
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+/* Con imagen: el ::before pasa de ser un blob a un overlay de textura sutil */
+body.has-bg-image::before {
+  width: 100vw !important;
+  height: 100vh !important;
+  top: 0 !important;
+  left: 0 !important;
+  border-radius: 0 !important;
+  filter: none !important;
+  background: linear-gradient(
+    135deg,
+    rgba(99, 102, 241, 0.12) 0%,
+    transparent 50%,
+    rgba(6, 182, 212, 0.08) 100%
+  ) !important;
+}
+
+/* El ::after blob se mantiene sutil para añadir un toque de color */
+body.has-bg-image::after {
+  opacity: 0.5;
+}
+
+/* App::before blob se apaga cuando hay imagen */
+body.has-bg-image ~ * #app::before,
+body.has-bg-image #app::before {
+  opacity: 0;
+}
+
 /* ── App shell ───────────────────────────────────────────────────────────────── */
 
 #app {

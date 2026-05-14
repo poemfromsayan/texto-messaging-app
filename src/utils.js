@@ -818,3 +818,35 @@ export const isGhostMode = () =>
  */
 export const setGhostMode = (active) =>
   localStorage.setItem('texto-ghost', String(active));
+
+/* ── Fondo personalizado ─────────────────────────────────────────────────── */
+
+/** Retorna la URL del fondo guardado, o null si no hay ninguno. */
+export const getBgImage = () =>
+  localStorage.getItem('texto-bg') || null;
+
+/**
+ * Guarda la URL del fondo y la aplica de inmediato.
+ * Pasar null elimina el fondo personalizado.
+ * @param {string|null} url
+ */
+export const setBgImage = (url) => {
+  if (url) localStorage.setItem('texto-bg', url);
+  else localStorage.removeItem('texto-bg');
+  applyBgImage(url);
+};
+
+/**
+ * Aplica (o retira) el fondo personalizado en el DOM.
+ * Se llama en el arranque desde router.js y al cambiar desde el perfil.
+ * @param {string|null} [url]
+ */
+export const applyBgImage = (url = getBgImage()) => {
+  if (url) {
+    document.body.style.setProperty('--custom-bg-url', `url("${url}")`);
+    document.body.classList.add('has-bg-image');
+  } else {
+    document.body.style.removeProperty('--custom-bg-url');
+    document.body.classList.remove('has-bg-image');
+  }
+};

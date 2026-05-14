@@ -15,7 +15,7 @@ import { Button }    from '../components/Button.js';
 import { Input }     from '../components/Input.js';
 import { getState, updateUser } from '../store.js';
 import { navigate }  from '../navigation.js';
-import { initials as makeInitials, ACCENT_PALETTES, getAccentColor, setAccentColor, isSoundMuted, setSoundMuted, getPin, setPin, lockSession, isGhostMode, setGhostMode } from '../utils.js';
+import { initials as makeInitials, ACCENT_PALETTES, getAccentColor, setAccentColor, isSoundMuted, setSoundMuted, getPin, setPin, lockSession, isGhostMode, setGhostMode, getBgImage, setBgImage } from '../utils.js';
 
 /**
  * @returns {HTMLElement}
@@ -280,6 +280,125 @@ export const ProfileView = () => {
   });
 
   // ── Botón guardar ──────────────────────────────────────────────────────────
+  // ── Fondo personalizado ──────────────────────────────────────────────────
+  const PRESETS = [
+    {
+      id: 'aurora',
+      label: 'Aurora',
+      url: 'https://images.unsplash.com/photo-1531366936337-7c912a4589a7?w=1920&fit=crop&q=80',
+      thumb: 'https://images.unsplash.com/photo-1531366936337-7c912a4589a7?w=120&fit=crop&q=60',
+    },
+    {
+      id: 'space',
+      label: 'Espacio',
+      url: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1920&fit=crop&q=80',
+      thumb: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=120&fit=crop&q=60',
+    },
+    {
+      id: 'mountains',
+      label: 'Montañas',
+      url: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&fit=crop&q=80',
+      thumb: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=120&fit=crop&q=60',
+    },
+    {
+      id: 'abstract',
+      label: 'Abstracto',
+      url: 'https://images.unsplash.com/photo-1558591710-4b4a1ae0f04d?w=1920&fit=crop&q=80',
+      thumb: 'https://images.unsplash.com/photo-1558591710-4b4a1ae0f04d?w=120&fit=crop&q=60',
+    },
+  ];
+
+  const bgSection = section({ className: 'profile-form-section glass' }, scroll);
+  h3({ className: 'profile-section-label' }, bgSection, 'FONDO PERSONALIZADO');
+
+  // Tip de recomendación
+  const bgTip = div({ className: 'profile-bg-tip' }, bgSection,
+    '💡 Usa imágenes con variedad de color y profundidad. Evita fondos uniformes — el efecto glassmorphism se pierde.'
+  );
+
+  // Grid de presets
+  const bgGrid = div({ className: 'profile-bg-grid' }, bgSection);
+  let activeBgId = getBgImage()
+    ? (PRESETS.find(p => p.url === getBgImage())?.id ?? 'custom')
+    : null;
+
+  const updateBgBtns = () => {
+    bgBtns.forEach(({ el, preset }) => {
+      el.classList.toggle('profile-bg-thumb--active', preset.id === activeBgId);
+    });
+    noneBtn.classList.toggle('profile-bg-none--active', !activeBgId);
+  };
+
+  // Botón "Sin fondo"
+  const noneBtn = div({
+    className: ['profile-bg-none', !activeBgId ? 'profile-bg-none--active' : ''].filter(Boolean).join(' '),
+    role: 'button',
+    tabIndex: 0,
+    'aria-label': 'Sin fondo personalizado',
+    onClick: () => { activeBgId = null; setBgImage(null); updateBgBtns(); },
+  }, bgGrid, '✕');
+
+  noneBtn.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); noneBtn.click(); }
+  });
+
+  const bgBtns = PRESETS.map(preset => {
+    const el = div({
+      className: ['profile-bg-thumb', preset.id === activeBgId ? 'profile-bg-thumb--active' : ''].filter(Boolean).join(' '),
+      role: 'button',
+      tabIndex: 0,
+      'aria-label': preset.label,
+      title: preset.label,
+    }, bgGrid);
+
+    const img = document.createElement('img');
+    img.src = preset.thumb;
+    img.alt = preset.label;
+    img.loading = 'lazy';
+    el.appendChild(img);
+
+    span({ className: 'profile-bg-label' }, el, preset.label);
+
+    el.addEventListener('click', () => {
+      activeBgId = preset.id;
+      setBgImage(preset.url);
+      updateBgBtns();
+    });
+    el.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); el.click(); }
+    });
+
+    return { el, preset };
+  });
+
+  // Input para URL personalizada
+  const bgUrlWrap = div({ className: 'profile-bg-url-wrap' }, bgSection);
+  span({ className: 'profile-sound-label' }, bgUrlWrap, 'URL personalizada');
+
+  const bgUrlInput = document.createElement('input');
+  bgUrlInput.type = 'url';
+  bgUrlInput.placeholder = 'https://ejemplo.com/imagen.jpg';
+  bgUrlInput.className = 'profile-pin-input';
+  bgUrlInput.style.width = '100%';
+  bgUrlInput.style.letterSpacing = 'normal';
+  bgUrlInput.style.textAlign = 'left';
+  bgUrlInput.setAttribute('aria-label', 'URL de fondo personalizado');
+  bgUrlWrap.appendChild(bgUrlInput);
+
+  const bgUrlApply = document.createElement('button');
+  bgUrlApply.textContent = 'Aplicar';
+  bgUrlApply.className = 'profile-bg-apply-btn';
+  bgUrlWrap.appendChild(bgUrlApply);
+
+  bgUrlApply.addEventListener('click', () => {
+    const url = bgUrlInput.value.trim();
+    if (!url) return;
+    activeBgId = 'custom';
+    setBgImage(url);
+    updateBgBtns();
+    bgUrlInput.value = '';
+  });
+
   // ── Sesiones activas ─────────────────────────────────────────────────────
   const SESSION_STORAGE_KEY = 'texto-sessions';
 
@@ -840,6 +959,113 @@ const injectStyles = () => {
       transition: var(--transition-fast);
     }
     .session-close-all-btn:hover { background: rgba(239, 68, 68, 0.08); }
+
+    /* ── Fondo personalizado ─────────────────────────────────────────────── */
+    .profile-bg-tip {
+      font-size: var(--text-xs);
+      color: var(--text-muted);
+      line-height: var(--leading-relaxed);
+      padding: 0 var(--space-4) var(--space-3);
+    }
+
+    .profile-bg-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: var(--space-2);
+      padding: 0 var(--space-4) var(--space-4);
+    }
+
+    .profile-bg-none {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      aspect-ratio: 1;
+      border-radius: var(--radius-md);
+      border: 1.5px dashed var(--glass-border-strong);
+      font-size: var(--text-base);
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: var(--transition-fast);
+      user-select: none;
+    }
+    .profile-bg-none:hover { background: var(--glass-1); border-color: var(--text-muted); }
+    .profile-bg-none--active {
+      background: var(--glass-2);
+      border-color: var(--text-secondary);
+      border-style: solid;
+      color: var(--text-primary);
+      box-shadow: 0 0 0 2px var(--text-secondary);
+    }
+    .profile-bg-none:focus-visible { outline: 2px solid var(--text-secondary); outline-offset: 2px; }
+
+    .profile-bg-thumb {
+      position: relative;
+      aspect-ratio: 1;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      border: 1.5px solid transparent;
+      cursor: pointer;
+      transition: var(--transition-fast);
+    }
+    .profile-bg-thumb img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.3s ease;
+    }
+    .profile-bg-thumb:hover img   { transform: scale(1.08); }
+    .profile-bg-thumb:hover       { border-color: var(--glass-border-strong); }
+    .profile-bg-thumb--active {
+      border-color: var(--text-secondary);
+      box-shadow: 0 0 0 2px var(--text-secondary);
+    }
+    .profile-bg-thumb:focus-visible { outline: 2px solid var(--text-secondary); outline-offset: 2px; }
+
+    .profile-bg-label {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      font-size: 9px;
+      font-weight: var(--weight-semibold);
+      color: #fff;
+      text-align: center;
+      background: linear-gradient(transparent, rgba(0,0,0,0.7));
+      padding: 6px 2px 3px;
+      pointer-events: none;
+      letter-spacing: 0.03em;
+    }
+
+    .profile-bg-url-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+      padding: 0 var(--space-4) var(--space-4);
+    }
+    .profile-bg-url-wrap .profile-sound-label {
+      font-size: var(--text-xs);
+      color: var(--text-muted);
+    }
+    .profile-bg-url-wrap .profile-pin-input {
+      width: 100%;
+      letter-spacing: normal;
+      text-align: left;
+    }
+
+    .profile-bg-apply-btn {
+      align-self: flex-end;
+      font-family: var(--font-sans);
+      font-size: var(--text-sm);
+      font-weight: var(--weight-semibold);
+      color: var(--accent-on-primary);
+      background: var(--accent-primary);
+      border: none;
+      border-radius: var(--radius-full);
+      padding: var(--space-2) var(--space-5);
+      cursor: pointer;
+      transition: var(--transition-fast);
+    }
+    .profile-bg-apply-btn:hover  { background: var(--accent-primary-hover); }
+    .profile-bg-apply-btn:active { transform: scale(0.97); }
+
   `;
   document.head.appendChild(style);
 };
